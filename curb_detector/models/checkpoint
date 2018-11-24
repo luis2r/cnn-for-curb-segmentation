@@ -1,2 +1,2 @@
-model_checkpoint_path: "model_E0050-B0016.ckpt"
-all_model_checkpoint_paths: "model_E0050-B0016.ckpt"
+model_checkpoint_path: "model_E0001-B0005.ckpt"
+all_model_checkpoint_paths: "model_E0001-B0005.ckpt"
