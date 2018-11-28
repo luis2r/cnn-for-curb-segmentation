@@ -174,7 +174,7 @@ def run():
 
         # TODO: Build NN using load_vgg, layers, and optimize function
 
-        epochs = 1
+        epochs = 50
         batch_size = 5
 
         # TF placeholders
