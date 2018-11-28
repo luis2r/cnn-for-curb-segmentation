@@ -127,9 +127,9 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         # print("softmax ",im_softmax.shape)
         # print("softmax col ",im_softmax[0][:, 1].shape)
 
-        im_softmax = im_softmax[0][:, 1].reshape(image_shape[0], image_shape[1])
+        im_softmax = im_softmax[0][:, 1].reshape(image_shape[1], image_shape[0])
 
-        segmentation = (im_softmax > 0.5).reshape(image_shape[0], image_shape[1], 1)
+        segmentation = (im_softmax > 0.5).reshape(image_shape[1], image_shape[0], 1)
         print("segmantation ",len(segmentation[0]))
         print("segmantation col",segmentation[0][0])
         mask = np.dot(segmentation, np.array([[0, 255, 0, 127]]))
