@@ -113,28 +113,28 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
     :return: Output for for each test image
     """
     for image_file in glob(os.path.join(data_folder, 'image_2', '*.png')):
-        #image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
+        image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
 
-        image = cv2.imread(image_file)
+        #image = cv2.imread(image_file)
         #image = cv2.resize(image, image_shape)
-        image = cv2.resize( image, (image_shape[1], image_shape[0]) )
+        #image = cv2.resize( image, (image_shape[1], image_shape[0]) )
         im_softmax = sess.run(
             [tf.nn.softmax(logits)],
             {keep_prob: 1.0, image_pl: [image]})
-        print("softmax ",len(im_softmax[0]))
-        print("softmax col",len(im_softmax[0][0]))
+        # print("softmax ",len(im_softmax[0]))
+        # print("softmax col",len(im_softmax[0][0]))
 
         # print("softmax ",im_softmax.shape)
         # print("softmax col ",im_softmax[0][:, 1].shape)
 
-        im_softmax = im_softmax[0][:, 1].reshape(image_shape[1], image_shape[0])
+        im_softmax = im_softmax[0][:, 1].reshape(image_shape[0], image_shape[1])
 
-        segmentation = (im_softmax > 0.5).reshape(image_shape[1], image_shape[0], 1)
-        print("segmantation ",len(segmentation[0]))
-        print("segmantation col",segmentation[0][0])
+        segmentation = (im_softmax > 0.5).reshape(image_shape[0], image_shape[1], 1)
+        # print("segmantation ",len(segmentation[0]))
+        # print("segmantation col",segmentation[0][0])
         mask = np.dot(segmentation, np.array([[0, 255, 0, 127]]))
-        print("shape ",mask.shape)
-        print("shape ",mask)
+        # print("shape ",mask.shape)
+        # print("shape ",mask)
         mask = scipy.misc.toimage(mask, mode="RGBA")
 
         street_im = scipy.misc.toimage(image)
