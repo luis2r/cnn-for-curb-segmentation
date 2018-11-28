@@ -116,8 +116,8 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
 
         image = cv2.imread(image_file)
-        image = cv2.resize(image, image_shape)
-
+        #image = cv2.resize(image, image_shape)
+        image = cv2.resize( image, (image_shape[1], image_shape[0]) )
         im_softmax = sess.run(
             [tf.nn.softmax(logits)],
             {keep_prob: 1.0, image_pl: [image]})
