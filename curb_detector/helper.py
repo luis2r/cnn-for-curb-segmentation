@@ -148,7 +148,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         yield os.path.basename(image_file), np.array(street_im)
 
 
-def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image):
+def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org):
     # Make folder for current run
     output_dir = os.path.join(runs_dir, str(time.time()))
     if os.path.exists(output_dir):
@@ -162,4 +162,4 @@ def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_p
         sess, logits, keep_prob, input_image, os.path.join(data_dir), image_shape)
 
     for name, image in image_outputs:
-        scipy.misc.imsave(os.path.join(output_dir, name), image)
+        scipy.misc.imsave(os.path.join(output_dir, name), scipy.misc.imresize(scipy.misc.imread(image), shape_org))

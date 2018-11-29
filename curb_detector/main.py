@@ -152,6 +152,7 @@ tests.test_train_nn(train_nn)
 def run():
     num_classes = 2
     image_shape = (160, 576)
+    shape_org = (256,256)
     data_dir = '/home/shared/datasets/bird_eye_view/velodyne'
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
@@ -176,7 +177,7 @@ def run():
         # TODO: Build NN using load_vgg, layers, and optimize function
 
         # epochs = 50
-        epochs = 50
+        epochs = 1
         batch_size = 16
 
         # TF placeholders
@@ -195,7 +196,7 @@ def run():
              correct_label, keep_prob, learning_rate)
 
         # TODO: Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
 
         # OPTIONAL: Apply the trained model to a video
 
