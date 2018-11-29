@@ -152,7 +152,7 @@ tests.test_train_nn(train_nn)
 def run():
     num_classes = 2
     image_shape = (160, 576)
-    data_dir = '/media/luis/data/carla_bird_eye_dataset/velodyne'
+    data_dir = '/home/shared/datasets/bird_eye_view/velodyne'
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
