@@ -177,8 +177,8 @@ def run():
         # TODO: Build NN using load_vgg, layers, and optimize function
 
         # epochs = 50
-        epochs = 1
-        batch_size = 5
+        epochs = 50
+        batch_size = 16
 
         # TF placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
