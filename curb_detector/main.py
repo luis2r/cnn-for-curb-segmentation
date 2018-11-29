@@ -198,7 +198,7 @@ def run():
 
 		#saver.save(sess, '../models/segmentation_model.ckpt')
 
-        save_path = saver.save(sess, "./models/model_E%04d-B%04d-K%f.ckpt"%(epoch, batch_size, keep_prob))
+        save_path = saver.save(sess, "./models/model_E%04d-B%04d-K%f.ckpt"%(epochs, batch_size, keep_prob))
         print("Model saved in file: %s" % save_path)
 
         # TODO: Save inference data using helper.save_inference_samples
