@@ -178,7 +178,7 @@ def run():
 
         # epochs = 50
         epochs = 1
-        batch_size = 16
+        batch_size = 5
 
         # TF placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
@@ -198,7 +198,7 @@ def run():
 
 		#saver.save(sess, '../models/segmentation_model.ckpt')
 
-        save_path = saver.save(sess, "./models/model_E%04d-B%04d-K%f.ckpt"%(epochs, batch_size, keep_prob))
+        save_path = saver.save(sess, "./models/model_E%04d-B%04d.ckpt"%(epochs, batch_size))
         print("Model saved in file: %s" % save_path)
 
         # TODO: Save inference data using helper.save_inference_samples
