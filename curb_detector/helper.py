@@ -72,10 +72,12 @@ def gen_batch_function(data_folder, image_shape):
         :return: Batches of training data
         """
         image_paths = glob(os.path.join(data_folder, 'data', '*.png'))
-        # label_paths = {
-        #     re.sub(r'_(lane|road)_', '_', os.path.basename(path)): path
-        #     for path in glob(os.path.join(data_folder, 'gt_image_2', '*_road_*.png'))}
-        label_paths = glob(os.path.join(data_folder, 'gt', '*.png'))
+        label_paths = {
+            re.sub(r'_(lane|road)_', '_', os.path.basename(path)): path
+            for path in glob(os.path.join(data_folder, 'gt', '*.png'))}
+        
+
+        #label_paths = glob(os.path.join(data_folder, 'gt', '*.png'))
         # background_color = np.array([255, 0, 0])
 
         random.shuffle(image_paths)
