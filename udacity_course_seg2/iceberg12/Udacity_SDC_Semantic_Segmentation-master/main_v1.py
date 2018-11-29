@@ -273,7 +273,7 @@ def run():
             saver = tf.train.Saver()
             train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
                 correct_label, keep_prob, learning_rate)
-            saver.save(sess, 'segmentation_model')
+            saver.save(sess, '/tmp/segmentation_model')
             
         if predict_image:
             saver = tf.train.Saver()
