@@ -36,7 +36,7 @@ def run():
     data_dir = '/home/shared/datasets/bird_eye_view/velodyne'
 
 
-    # runs_dir = './runs'
+    runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
@@ -86,6 +86,9 @@ def run():
         sess.run(tf.global_variables_initializer())
         new_saver = tf.train.import_meta_graph('./models/model_E0001-B0005.ckpt.meta')
         new_saver.restore(sess, './models/model_E0001-B0005.ckpt')
+
+        for i, var in enumerate(new_saver._var_list):
+        print('Var {}: {}'.format(i, var))
 
         graph = tf.get_default_graph()
 
