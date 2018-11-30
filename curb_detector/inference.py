@@ -83,17 +83,13 @@ def run():
 
         # chkp.print_tensors_in_checkpoint_file("/tmp/model.ckpt", tensor_name='', all_tensors=True)
 
-        # sess.run(tf.global_variables_initializer())
-        imported_graph = tf.train.import_meta_graph('./models/model_E0001-B0005.ckpt.meta')
-        # new_saver.restore(sess, './models/model_E0001-B0005.ckpt')
-
-        # list all the tensors in the graph
-        for tensor in tf.get_default_graph().get_operations():
-            print (tensor.name)
+        sess.run(tf.global_variables_initializer())
+        new_saver = tf.train.import_meta_graph('./models/model_E0001-B0005.ckpt.meta')
+        new_saver.restore(sess, './models/model_E0001-B0005.ckpt')
 
         graph = tf.get_default_graph()
 
-        # logits = graph.get_tensor_by_name('logits:0')
+        logits = graph.get_tensor_by_name('logits:0')
         keep_prob = graph.get_tensor_by_name('keep_prob:0')
         input_tensor = graph.get_tensor_by_name('image_input:0')
 
