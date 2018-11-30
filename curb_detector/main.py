@@ -183,8 +183,8 @@ def run():
         # TODO: Build NN using load_vgg, layers, and optimize function
 
         # epochs = 50
-        epochs = 1
-        batch_size = 5
+        epochs = 50
+        batch_size = 16
 
         # TF placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
@@ -208,7 +208,7 @@ def run():
 		#saver.save(sess, '../models/segmentation_model.ckpt')
 
         # TODO: Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
+        helper.save_inference_samples(runs_dir, test_data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
 
         # OPTIONAL: Apply the trained model to a video
 
