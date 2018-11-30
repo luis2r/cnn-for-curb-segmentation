@@ -88,7 +88,7 @@ def run():
         new_saver.restore(sess, './models/model_E0001-B0005.ckpt')
 
         for i, var in enumerate(new_saver._var_list):
-        print('Var {}: {}'.format(i, var))
+            print('Var {}: {}'.format(i, var))
 
         graph = tf.get_default_graph()
 
