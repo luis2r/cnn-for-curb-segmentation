@@ -159,6 +159,9 @@ def run():
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
+    logits = None
+
+
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
 
@@ -197,6 +200,7 @@ def run():
         sess.run(tf.global_variables_initializer())
 
         saver = tf.train.Saver()
+
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image,
              correct_label, keep_prob, learning_rate, saver)
 
