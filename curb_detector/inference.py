@@ -89,7 +89,8 @@ def run():
 
         graph = tf.get_default_graph()
 
-        logits = graph.get_tensor_by_name('logits:0')
+        #logits = graph.get_tensor_by_name('logits:0')
+        logits = tf.get_collection("logits")[0]
         keep_prob = graph.get_tensor_by_name('keep_prob:0')
         input_tensor = graph.get_tensor_by_name('image_input:0')
 
