@@ -92,7 +92,7 @@ def run():
         #logits = graph.get_tensor_by_name('logits:0')
         # logits = graph.get_collection("logits")[0]
         keep_prob = graph.get_tensor_by_name('keep_prob:0')
-        input_tensor = graph.get_tensor_by_name('image_input:0')
+        input_image = graph.get_tensor_by_name('image_input:0')
 
         # TODO: Save inference data using helper.save_inference_samples
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
