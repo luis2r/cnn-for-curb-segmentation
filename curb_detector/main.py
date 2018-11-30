@@ -208,7 +208,7 @@ def run():
 		#saver.save(sess, '../models/segmentation_model.ckpt')
 
         # TODO: Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(runs_dir, test_data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
+        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
 
         # OPTIONAL: Apply the trained model to a video
 
