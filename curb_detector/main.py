@@ -156,7 +156,7 @@ def run():
     image_shape = (160, 576)
     shape_org = (256,256)
     data_dir = '/home/shared/datasets/bird_eye_view/velodyne'
-    test_data_dir = '/home/shared/datasets/bird_eye_view/carina'
+    test_data_dir = '/home/shared/datasets/bird_eye_view/carina/velodyne'
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
@@ -208,7 +208,7 @@ def run():
 		#saver.save(sess, '../models/segmentation_model.ckpt')
 
         # TODO: Save inference data using helper.save_inference_samples
-        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
+        helper.save_inference_samples(runs_dir, test_data_dir, sess, image_shape, logits, keep_prob, input_image, shape_org)
 
         # OPTIONAL: Apply the trained model to a video
 
