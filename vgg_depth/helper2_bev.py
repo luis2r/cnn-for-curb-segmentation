@@ -115,7 +115,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
     :param image_shape: Tuple - Shape of image
     :return: Output for for each test image
     """
-    for image_file in glob(os.path.join(data_folder, 'image_2', '*.png')):
+    for image_file in glob(os.path.join(data_folder, 'data', '*.png')):
         #image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
         #image = scipy.misc.imresize(scipy.misc.imread(image_file), (image_shape[1],image_shape[0]))#########funciona
         image = Image.open(image_file)
@@ -134,7 +134,9 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         right, bottom = left+new_size[0], top+new_size[1]
 
 
-        cropped = image.crop( ( left, top, right, bottom ) )  # size: 576 X 160
+        # cropped = image.crop( ( left, top, right, bottom ) )  # size: 576 X 160
+        cropped = image.resize( new_size )  # size: 576 X 160
+
         image_resized = np.array(cropped)
         #print("dataset", folder_img+"/"+filename.decode())
 
@@ -169,19 +171,20 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         
         im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])))
 
-        #print("a",im_softmax.shape)
+        print("a",im_softmax.shape)
+        
         #print("b",im_softmax)
-        im_argmax = np.argmax(im_softmax,axis=1)
+        # im_argmax = np.argmax(im_softmax,axis=1)
 
 
 
         #print("c",im_argmax.shape)
         #print("d",im_argmax)
         #print(np.max(im_argmax))
-        im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
+        # im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
         #print("c1",im_argmax.shape)
-        print(im_argmax)
-        one_hot = np.eye(255)[im_argmax]
+        # print(im_argmax)
+        # one_hot = np.eye(255)[im_argmax]
         #print(one_hot.shape)
         #one_hot_b=blockshaped(one_hot, 1242, 85)
         #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
@@ -189,12 +192,12 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print(one_hot.shape)
         #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
         #print(one_hot_b.dtype)
-        one_hot_b = one_hot.astype(bool)
+        # one_hot_b = one_hot.astype(bool)
         #print(one_hot_b.dtype)
 
         #print(one_hot_b.shape)
-        _,inverse_one_hot,_ = find(one_hot)
-        image_one_hot=inverse_one_hot.reshape(image_shape[1],image_shape[0])
+        # _,inverse_one_hot,_ = find(one_hot)
+        image_one_hot=im_softmax.reshape(image_shape[1],image_shape[0])
 
         im_out = np.uint8(image_one_hot)
         img = Image.fromarray(im_out, mode="P")
