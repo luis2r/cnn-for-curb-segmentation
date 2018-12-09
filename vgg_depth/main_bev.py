@@ -404,7 +404,7 @@ def _read_resize_py_function(filename):
     #print("norm",np.max(image_norm),np.min(image_norm))
 
 
-    filename_gt = re.sub(r'(?is)data', 'gt', filename.decode())
+    filename_gt = re.sub(r'(?is)data/', 'gt/', filename.decode())
 
     # filename_gt = re.sub(r'(?is)kitti_raw/raw_data', 'depth_kitti/depth/depth_single_img/train', filename_gt)
     # filename_gt = re.sub(r'(?is)2011_09_30/', '', filename_gt)
