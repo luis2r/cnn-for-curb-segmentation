@@ -22,6 +22,6 @@ with open(outputfile, "w") as txtfile:
 				print(fn)
 
 				#txtfile.write("%s\n" % filename)
-				txtfile.write("%s%s\n" % (folder, fn))
+				txtfile.write("%s/%s\n" % (folder, fn))
 
 txtfile.close()
