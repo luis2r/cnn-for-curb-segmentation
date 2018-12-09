@@ -428,7 +428,7 @@ def _read_resize_py_function(filename):
 
 
 
-    image_decodedgt = Image.open(filename_gt.decode(),mode='r')
+    image_decodedgt = Image.open(filename_gt,mode='r')
 
     #print(folder_img+"/"+filename.decode())
     #image_resized = scipy.misc.imresize(image_decoded, image_shape)
