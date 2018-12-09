@@ -567,7 +567,7 @@ def run():
     runs_dir = './runs_bev_kitti'
     #filenames = ["/home/shared/datasets/kitti_road/data_road/training/training.txt"]
     #filenames_gt = ["/home/shared/datasets/kitti_road/data_road/training/gt_training.txt"]
-    filenames = ["~/Desktop/cnn-for-curb-segmentation/vgg_depth/trainin_bev_kitti_car_people_bici.txt"]
+    filenames = ["/home/luis2r/Desktop/cnn-for-curb-segmentation/vgg_depth/trainin_bev_kitti_car_people_bici.txt"]
     #filenames_gt = ["/home/luis2r/rob_devkit/depth/KITTI/kitti_train_depth_maps.txt"}
     # data_folder = "/home/shared/datasets/kitti_road/data_road/training"
     # filenames = glob(os.path.join(data_folder, 'image_2', '*.png'))
