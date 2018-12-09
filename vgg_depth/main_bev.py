@@ -512,9 +512,11 @@ def _read_resize_py_function(filename):
 
 
 
+#######################################################
+    # print("gt shape",gt_image.shape)
+    # print("image_norm",image_norm.shape)
+#######################################################
 
-    print("gt shape",gt_image.shape)
-    print("image_norm",image_norm.shape)
 
     #print("gt",gt_image)
     #print("ax2",np.size(gt_image,axis=2))
