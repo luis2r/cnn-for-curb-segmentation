@@ -540,12 +540,12 @@ def _read_resize_py_function(filename):
 #     #iterator = batched_dataset.make_initializable_iterator()
 #     return batched_dataset.make_initializable_iterator()
 
-def input_pipeline(filenames, batch_size, num_shards, seed=None):
+def input_pipeline(data_dir, filenames, batch_size, num_shards, seed=None):
 
     dataset = tf.data.Dataset.list_files(filenames).shuffle(num_shards)
     #dataset = dataset.interleave( lambda filename: (tf.data.TextLineDataset(filename) .skip(1) .map(lambda row: parse_csv(row, hparams), num_parallel_calls=multiprocessing.cpu_count())), cycle_length=5) 
     #dataset = dataset.interleave( lambda filename: (tf.data.TextLineDataset(filename).map(lambda filename: tuple(tf.py_func( _read_resize_py_function, [filename], [tf.double, tf.bool])), num_parallel_calls=multiprocessing.cpu_count())), cycle_length=5) 
-    dataset = dataset.interleave( lambda filename: (tf.data.TextLineDataset(filename).map(lambda filename: tuple(tf.py_func( _read_resize_py_function, [filename], [tf.double, tf.bool])), 
+    dataset = dataset.interleave( lambda filename: (tf.data.TextLineDataset(filename).map(lambda filename: tuple(tf.py_func( _read_resize_py_function, [data_dir+"/"+filename], [tf.double, tf.bool])), 
         num_parallel_calls=multiprocessing.cpu_count())), cycle_length=5) 
     #dataset = dataset.interleave( lambda filename: (tf.data.TextLineDataset(filename).map(lambda filename: tuple(tf.py_func( _read_resize_py_function, [filename], [tf.string, tf.string])), num_parallel_calls=2)), cycle_length=2) 
     dataset = dataset.shuffle(buffer_size=4000, seed=seed)
@@ -619,7 +619,8 @@ def run():
     #iterator = batched_dataset.make_initializable_iterator()
     
     seed = tf.placeholder(tf.int64, shape=())
-    iterator = input_pipeline(filenames, batch_size, num_shards, seed)
+
+    iterator = input_pipeline(data_dir, filenames, batch_size, num_shards, seed)
 
     with tf.Session() as sess:
         # Path to vgg model
