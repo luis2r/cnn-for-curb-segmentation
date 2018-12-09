@@ -442,16 +442,16 @@ def _read_resize_py_function(filename):
 
     label_resized= np.array(croppedgt)
 
-    gt_bg = np.all(gt_image == background_color, axis=2)
+    gt_bg = np.all(label_resized == background_color, axis=2)
     gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
 
-    gt_r  = np.all(gt_image == r_color, axis=2)
+    gt_r  = np.all(label_resized == r_color, axis=2)
     gt_r= gt_r.reshape(*gt_r.shape, 1)
 
-    gt_g  = np.all(gt_image == g_color, axis=2)
+    gt_g  = np.all(label_resized == g_color, axis=2)
     gt_g = gt_g.reshape(*gt_g.shape, 1)
 
-    gt_b  = np.all(gt_image == b_color, axis=2)
+    gt_b  = np.all(label_resized == b_color, axis=2)
     gt_b = gt_b.reshape(*gt_b.shape, 1)
 
 
