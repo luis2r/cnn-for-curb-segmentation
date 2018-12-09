@@ -458,8 +458,8 @@ def _read_resize_py_function(filename):
     # gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
     gt_image = np.concatenate((gt_bg, gt_r, gt_g, gt_b), axis=2)
 
-    print("shape image",image_decoded.shape)
-    print("shape gt image",gt_image.shape)
+    # print("shape image",image_decoded.shape)
+    # print("shape gt image",gt_image.shape)
 
     ###############one hot########################
     # img_array = np.reshape(label_resized,(np.size(label_resized)))
