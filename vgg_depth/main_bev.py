@@ -585,7 +585,7 @@ def run():
     #tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
-    helper2.maybe_download_pretrained_vgg(data_dir)
+    helper2_bev.maybe_download_pretrained_vgg(data_dir)
 
     #epochs = 50
     epochs= 1
@@ -658,8 +658,8 @@ def run():
         #train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image, correct_label, keep_prob, learning_rate)
         train_nn(sess, epochs, train_op, cross_entropy_loss, input_image, correct_label, keep_prob, learning_rate, iterator, seed)
 
-        # TODO: Save inference data using helper2.save_inference_samples
-        helper2.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+        # TODO: Save inference data using helper2_bev_bev.save_inference_samples
+        helper2_bev.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
 
         # OPTIONAL: Apply the trained model to a video
 
