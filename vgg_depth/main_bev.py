@@ -420,7 +420,7 @@ def _read_resize_py_function(filename):
     #label_decoded  = cv2.imread(folder_gt+"/"+filename_gt)
     #label_decoded  = Image.open(folder_gt+"/"+filename_gt)
     #image_arr = depth_read(filename_gt,image_shape)
-    image_arr = depth_read(filename_gt, left, right, top, bottom)
+    # image_arr = depth_read(filename_gt, left, right, top, bottom)
 
 
 
@@ -455,8 +455,12 @@ def _read_resize_py_function(filename):
     gt_b = gt_b.reshape(*gt_b.shape, 1)
 
 
-    gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
+    # gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
     gt_image = np.concatenate((gt_bg, gt_r, gt_g, gt_b), axis=2)
+
+    print("shape image",image_decoded.shape)
+    print("shape gt image",gt_image.shape)
+
     ###############one hot########################
     # img_array = np.reshape(label_resized,(np.size(label_resized)))
     # one_hot = np.eye(4)[img_array]
