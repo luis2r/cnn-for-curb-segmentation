@@ -2,7 +2,7 @@ import multiprocessing
 import re
 import os.path
 import tensorflow as tf
-import helper2
+import helper2_bev
 import warnings
 from distutils.version import LooseVersion
 import project_tests as tests

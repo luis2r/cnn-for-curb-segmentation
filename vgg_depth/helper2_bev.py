@@ -115,10 +115,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
     :param image_shape: Tuple - Shape of image
     :return: Output for for each test image
     """
-    print("datafolder",data_folder)
-    #for image_file in glob(os.path.join(data_folder, 'test/scene0712_00/color_rob/', '*.jpg')):
-    for image_file in glob(os.path.join(data_folder, '*.jpg')):
-        print(image_file)
+    for image_file in glob(os.path.join(data_folder, 'image_2', '*.png')):
         #image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
         #image = scipy.misc.imresize(scipy.misc.imread(image_file), (image_shape[1],image_shape[0]))#########funciona
         image = Image.open(image_file)
@@ -126,20 +123,15 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #image = np.array(image)
         image_shape = (576,160)
         new_size =(576,160)
-        width_d, height_d = 640,480
+        width_d, height_d = 1242,375
         #width = width_d-576
         width = width_d-new_size[0]
         #height = height_d-160
         height = height_d-new_size[1]
-        th_sky = 5 #threshold crop the sky
-        #left = random.randint(5, width) 
-        left = 0
-        #top = random.randint(th_sky, height)
-        top = 0
+        th_sky = 135 #threshold crop the sky
+        left = random.randint(0, width) 
+        top = random.randint(th_sky, height)
         right, bottom = left+new_size[0], top+new_size[1]
-
-
-
 
 
         cropped = image.crop( ( left, top, right, bottom ) )  # size: 576 X 160
@@ -169,29 +161,27 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #image = cv2.resize(image, image_shape)
         #print(logits.shape)
         #print(logits)
-        #im_softmax = sess.run([tf.nn.softmax(logits)],{keep_prob: 1.0, image_pl: [image_norm]})#########funciona
-        im_softmax = sess.run([logits],{keep_prob: 1.0, image_pl: [image_norm]})#########funciona
-        print("softmax ",len(im_softmax[0]))
-        print("softmax ",len(im_softmax[0][0]))
+        im_softmax = sess.run([tf.nn.softmax(logits)],{keep_prob: 1.0, image_pl: [image_norm]})#########funciona
+        #print("softmax ",len(im_softmax[0]))
+        #print("softmax ",len(im_softmax[0][0]))
         print("softmax ",im_softmax)
-
         #print("softmax al ",im_softmax)
         
-        im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])),1)
+        im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])))
 
-        print("a",im_softmax.shape)
+        #print("a",im_softmax.shape)
         #print("b",im_softmax)
-        #im_argmax = np.argmax(im_softmax,axis=1)
+        im_argmax = np.argmax(im_softmax,axis=1)
 
 
 
         #print("c",im_argmax.shape)
         #print("d",im_argmax)
         #print(np.max(im_argmax))
-        #im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
+        im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
         #print("c1",im_argmax.shape)
-        #print(im_argmax)
-        #one_hot = np.eye(256)[im_argmax]
+        print(im_argmax)
+        one_hot = np.eye(255)[im_argmax]
         #print(one_hot.shape)
         #one_hot_b=blockshaped(one_hot, 1242, 85)
         #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
@@ -199,32 +189,13 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print(one_hot.shape)
         #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
         #print(one_hot_b.dtype)
-        #one_hot_b = one_hot.astype(bool)
+        one_hot_b = one_hot.astype(bool)
         #print(one_hot_b.dtype)
 
         #print(one_hot_b.shape)
-        #_,inverse_one_hot,_ = find(one_hot)
-        #image_one_hot=im_softmax.reshape(image_shape[1],image_shape[0])
-        
-        #depth = im_softmax.reshape(160, 576,1)
-        depth = np.multiply(im_softmax,128)
-        a = [128]
-        depth = np.sum((depth,a),axis=0)
+        _,inverse_one_hot,_ = find(one_hot)
+        image_one_hot=inverse_one_hot.reshape(image_shape[1],image_shape[0])
 
-        #depth = image_one_hot.astype(np.float) * 4
-
-
-
-    #print("resta",np.max(image_norm),np.min(image_norm))
-
-
-        depth = depth.reshape(160, 576)
-
-
-
-
-
-        image_one_hot = depth
         im_out = np.uint8(image_one_hot)
         img = Image.fromarray(im_out, mode="P")
         #img.show()
@@ -276,8 +247,7 @@ def save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_p
     # Run NN on test images and save them to HD
     print('Training Finished. Saving test images to: {}'.format(output_dir))
     image_outputs = gen_test_output(
-
-        sess, logits, keep_prob, input_image, os.path.join(data_dir, 'test/scene0708_00/color_rob'), image_shape)
+        sess, logits, keep_prob, input_image, os.path.join(data_dir, 'data'), image_shape)
     for name, image in image_outputs:
         #print(image.shape)
         scipy.misc.imsave(os.path.join(output_dir, name), image)
