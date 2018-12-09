@@ -348,7 +348,11 @@ def depth_read(filename, left, right, top, bottom):
 def _read_resize_py_function(filename):
 
     #background_color = np.array([0, 0, 255])
-    background_color = np.array([255, 0, 0])#scipy.misc
+    background_color = np.array([0, 0, 0])
+    r_color = np.array([255, 0, 0])#scipy.misc
+    g_color = np.array([0, 255, 0])#scipy.misc
+    b_color = np.array([0, 0, 255])#scipy.misc
+
 
     image_shape = (576,160)
     new_size =(576,160)
@@ -377,7 +381,7 @@ def _read_resize_py_function(filename):
     #image_resized = Image.resize(image_decoded, image_shape)
 
     #image_decoded=image_decoded.resize(image_shape)
-    cropped = image_decoded.crop( ( left, top, right, bottom ) )  # size: 576 X 160
+    cropped = image_decoded.resize( new_size )  # size: 576 X 160
     image_resized = np.array(cropped)
     #print(image_resized.shape)
 
@@ -400,15 +404,15 @@ def _read_resize_py_function(filename):
     #print("norm",np.max(image_norm),np.min(image_norm))
 
 
-    filename_gt = re.sub(r'(?is)sync', 'sync/proj_depth/groundtruth', filename.decode())
+    filename_gt = re.sub(r'(?is)data', 'gt', filename.decode())
 
-    filename_gt = re.sub(r'(?is)kitti_raw/raw_data', 'depth_kitti/depth/depth_single_img/train', filename_gt)
-    filename_gt = re.sub(r'(?is)2011_09_30/', '', filename_gt)
-    filename_gt = re.sub(r'(?is)2011_09_29/', '', filename_gt)
-    filename_gt = re.sub(r'(?is)2011_09_28/', '', filename_gt)
-    filename_gt = re.sub(r'(?is)2011_09_26/', '', filename_gt)
-    filename_gt = re.sub(r'(?is)2011_10_03/', '', filename_gt)
-    filename_gt = re.sub(r'(?is)data/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)kitti_raw/raw_data', 'depth_kitti/depth/depth_single_img/train', filename_gt)
+    # filename_gt = re.sub(r'(?is)2011_09_30/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)2011_09_29/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)2011_09_28/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)2011_09_26/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)2011_10_03/', '', filename_gt)
+    # filename_gt = re.sub(r'(?is)data/', '', filename_gt)
     #print("filename",filename_gt)
     #folder_gt = "/home/shared/datasets/kitti_road/data_road/training/gt_image_2" 
 
@@ -417,31 +421,54 @@ def _read_resize_py_function(filename):
     #label_decoded  = Image.open(folder_gt+"/"+filename_gt)
     #image_arr = depth_read(filename_gt,image_shape)
     image_arr = depth_read(filename_gt, left, right, top, bottom)
-    #img_in = Image.fromarray(image_arr, mode="P") ### paso para 8 bit
-    #img_in.show()
-
-    #label_decoded  = Image.open(filename_gt)
-
-    #print(folder_gt+"/"+filename_gt)
-    #label_resized = scipy.misc.imresize(label_decoded, image_shape)
-    #label_resized = cv2.resize(label_decoded, image_shape)
-    #label_resized = Image.resize(label_decoded, image_shape)
-    #label_decoded =label_decoded.resize( image_shape)
 
 
 
-    label_resized = np.array(image_arr)
+
+
+
+
+    image_decodedgt = Image.open(filenamegt.decode(),mode='r')
+
+    #print(folder_img+"/"+filename.decode())
+    #image_resized = scipy.misc.imresize(image_decoded, image_shape)
+    #image_resized = cv2.resize(image_decoded, image_shape)
+    #image_resized = Image.resize(image_decoded, image_shape)
+
+    #image_decoded=image_decoded.resize(image_shape)
+    croppedgt = image_decodedgt.resize( new_size )  # size: 576 X 160
+
+
+
+    label_resized= np.array(croppedgt)
+
+    gt_bg = np.all(gt_image == background_color, axis=2)
+    gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
+
+    gt_r  = np.all(gt_image == r_color, axis=2)
+    gt_r= gt_r.reshape(*gt_r.shape, 1)
+
+    gt_g  = np.all(gt_image == g_color, axis=2)
+    gt_g = gt_g.reshape(*gt_g.shape, 1)
+
+    gt_b  = np.all(gt_image == b_color, axis=2)
+    gt_b = gt_b.reshape(*gt_b.shape, 1)
+
+
+    gt_bg = gt_bg.reshape(*gt_bg.shape, 1)
+    gt_image = np.concatenate((gt_bg, gt_r, gt_g, gt_b), axis=2)
     ###############one hot########################
-    img_array = np.reshape(label_resized,(np.size(label_resized)))
-    one_hot = np.eye(85)[img_array]
+    # img_array = np.reshape(label_resized,(np.size(label_resized)))
+    # one_hot = np.eye(4)[img_array]
     #print(one_hot.shape)
     #one_hot_b=blockshaped(one_hot, 1242, 85)
     #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
-    one_hot =one_hot.reshape(160,576,85)
+    # 4 clases
+    # one_hot =one_hot.reshape(160,576,4)
     #print(one_hot.shape)
     #one_hot_b=blockshaped(one_hot, image_shape[0], 85)
     #print(one_hot_b.dtype)
-    one_hot_b = one_hot.astype(bool)
+    # one_hot_b = one_hot.astype(bool)
 
 
 
@@ -460,7 +487,7 @@ def _read_resize_py_function(filename):
 
 
     #one_hot_b = one_hot_b.astype(bool)
-    gt_image = one_hot_b
+    # gt_image = one_hot_b
     #print(gt_image[100][100])
     #print(gt_image.shape)
     #print("max",np.max(label_resized))
@@ -534,13 +561,13 @@ def input_pipeline(filenames, batch_size, num_shards, seed=None):
 def run():
     #num_classes = 3
     #num_classes = 85
-    num_classes = 85
+    num_classes = 4
     image_shape = (576,160)
-    data_dir = '/home/shared/datasets/kitti_road'
-    runs_dir = './runs'
+    data_dir = '/home/shared/datasets/bird_eye_view/kitti/'
+    runs_dir = './runs_bev_kitti'
     #filenames = ["/home/shared/datasets/kitti_road/data_road/training/training.txt"]
     #filenames_gt = ["/home/shared/datasets/kitti_road/data_road/training/gt_training.txt"]
-    filenames = ["/home/luis2r/rob_devkit/depth/KITTI/kitti_train_images.txt"]
+    filenames = ["~/Desktop/cnn-for-curb-segmentation/vgg_depth/trainin_bev_kitti_car_people_bici.txt"]
     #filenames_gt = ["/home/luis2r/rob_devkit/depth/KITTI/kitti_train_depth_maps.txt"}
     # data_folder = "/home/shared/datasets/kitti_road/data_road/training"
     # filenames = glob(os.path.join(data_folder, 'image_2', '*.png'))
