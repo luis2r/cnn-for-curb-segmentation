@@ -170,11 +170,13 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print("softmax al ",im_softmax)
 
         im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])))
+        np.place(im_softmax, im_softmax>0.5, [1])
+        np.place(im_softmax, im_softmax<=0.5, [0])
 
         print("a",im_softmax.shape)
-
+        print("softmax 2",im_softmax)
         #print("b",im_softmax)
-        im_argmax = np.argmax(im_softmax,axis=1)
+        # im_argmax = np.argmax(im_softmax,axis=1)
 
 
         #print("c",im_argmax.shape)
