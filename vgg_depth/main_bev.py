@@ -591,7 +591,7 @@ def run():
 
     #epochs = 50
     epochs= 50
-    batch_size = 128
+    batch_size = 64
     num_shards = 12
     #seed = None
 
