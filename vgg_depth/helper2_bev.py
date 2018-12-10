@@ -181,7 +181,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print("c",im_argmax.shape)
         #print("d",im_argmax)
         #print(np.max(im_argmax))
-        a = 
+        # a = 
         im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
 
         #print("c1",im_argmax.shape)
