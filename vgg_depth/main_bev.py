@@ -590,8 +590,8 @@ def run():
     helper2_bev.maybe_download_pretrained_vgg(data_dir)
 
     #epochs = 50
-    epochs= 1
-    batch_size = 32
+    epochs= 50
+    batch_size = 128
     num_shards = 12
     #seed = None
 
