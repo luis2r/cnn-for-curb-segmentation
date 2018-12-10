@@ -175,8 +175,8 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
 ###########################comparar con el maximo de cada celda########################################3
 
 
-        np.place(im_softmax, im_softmax>0.5, [1])
-        np.place(im_softmax, im_softmax<=0.5, [0])
+        np.place(im_softmax, im_softmax>0.01, [1])
+        np.place(im_softmax, im_softmax<=0.01, [0])
         im_softmax = im_softmax[:,1:]
         print("a",im_softmax.shape)
         print("softmax 2",im_softmax)
