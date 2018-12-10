@@ -205,7 +205,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
 
         #print(one_hot_b.shape)
         # _,inverse_one_hot,_ = find(one_hot)
-        image_one_hot=im_softmax.reshape(image_shape[1],image_shape[0])
+        image_one_hot=im_softmax.reshape(image_shape[1],image_shape[0],3)
 
         im_out = np.uint8(image_one_hot*256)
         img = Image.fromarray(im_out, mode="P")
