@@ -170,9 +170,14 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print("softmax al ",im_softmax)
 
         im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])))
+
+
+###########################comparar con el maximo de cada celda########################################3
+
+
         np.place(im_softmax, im_softmax>0.5, [1])
         np.place(im_softmax, im_softmax<=0.5, [0])
-
+        im_softmax = im_softmax[:,1:]
         print("a",im_softmax.shape)
         print("softmax 2",im_softmax)
         #print("b",im_softmax)
@@ -183,10 +188,10 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print("d",im_argmax)
         #print(np.max(im_argmax))
         # a = 
-        im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
+        # im_argmax = np.reshape(im_argmax,(np.size(im_argmax)))
 
-        print("c1",im_argmax.shape)
-        print(im_argmax)
+        # print("c1",im_argmax.shape)
+        # print(im_argmax)
         # one_hot = np.eye(4)[im_argmax]
         #print(one_hot.shape)
         #one_hot_b=blockshaped(one_hot, 1242, 85)
@@ -200,9 +205,9 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
 
         #print(one_hot_b.shape)
         # _,inverse_one_hot,_ = find(one_hot)
-        image_one_hot=inverse_one_hot.reshape(image_shape[1],image_shape[0])
+        image_one_hot=im_softmax.reshape(image_shape[1],image_shape[0])
 
-        im_out = np.uint8(image_one_hot)
+        im_out = np.uint8(image_one_hot*256)
         img = Image.fromarray(im_out, mode="P")
         #img.show()
 
