@@ -168,7 +168,7 @@ def gen_test_output(sess, logits, keep_prob, image_pl, data_folder, image_shape)
         #print("softmax ",len(im_softmax[0][0]))
         print("softmax ",im_softmax)
         #print("softmax al ",im_softmax)
-        im_argmax = im_argmax [0:len(im_softmax[0])][:,1:3]
+        im_softmax = im_softmax [0:len(im_softmax[0])][:,1:3]
         print("softmax red",im_softmax)
         im_softmax = np.reshape(im_softmax, (len(im_softmax[0]),len(im_softmax[0][0])))
 
